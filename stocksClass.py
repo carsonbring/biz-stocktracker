@@ -1,0 +1,43 @@
+import pandas
+
+class Stocks:
+    # Getting the csv file open containing each of the tickers
+    NYSE = pandas.read_csv('NYSE_Tickers.csv', index_col='Symbol')
+    NYSE.pop('Name')
+    NYSE.pop('Last Sale')
+    NYSE.pop('Net Change')
+    NYSE.pop('% Change')
+    NYSE.pop('Market Cap')
+    NYSE.pop('Country')
+    NYSE.pop('IPO Year')
+    NYSE.pop('Volume')
+    NYSE.pop('Sector')
+    NYSE.pop('Industry')
+    nyselist = NYSE.index.tolist()
+    AMEX = pandas.read_csv('AMEX_Tickers.csv', index_col='Symbol')
+    AMEX.pop('Name')
+    AMEX.pop('Last Sale')
+    AMEX.pop('Net Change')
+    AMEX.pop('% Change')
+    AMEX.pop('Market Cap')
+    AMEX.pop('Country')
+    AMEX.pop('IPO Year')
+    AMEX.pop('Volume')
+    AMEX.pop('Sector')
+    AMEX.pop('Industry')
+    amexlist = AMEX.index.tolist()
+    NASDAQ = pandas.read_csv('NASDAQ_Tickers.csv', index_col='Symbol')
+    NASDAQ.pop('Name')
+    NASDAQ.pop('Last Sale')
+    NASDAQ.pop('Net Change')
+    NASDAQ.pop('% Change')
+    NASDAQ.pop('Market Cap')
+    NASDAQ.pop('Country')
+    NASDAQ.pop('IPO Year')
+    NASDAQ.pop('Volume')
+    NASDAQ.pop('Sector')
+    NASDAQ.pop('Industry')
+    nasdaqlist = NASDAQ.index.tolist()
+
+    # combining each of the lists
+    Symbols = nasdaqlist + amexlist + nyselist
