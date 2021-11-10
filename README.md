@@ -1,4 +1,18 @@
 # biz-stocktracker
+**NEW UPDATE - 1.1: PATCH NOTES**
+Right now, the program just is easier to set up if you use python 3.8 (I run it with 3.8.6).
+- Patched an issue where the stock numbers were only updating whenever the last thread would hit post limit and when the successor thread would hit post limit as well.
+- There is an issue with the sorting algorithm that I am using, so after the first couple runs the most talked about stock tickers might not be at the top of the list, but the correct number of times mentioned is still printed despite the ordering in the output table. (will be addressed soon)
+
+**Basic download instructions - for noobs **
+(to be added soon)
+
+
+
+
+
+
+
 What stock tickers are mentioned on /biz/'s Stock Market General? Use this program to find out which stocks to avoid at all costs
 
 This program gets all of the messages from the current Stock Market General thread on /biz/ and updates with new tickers
