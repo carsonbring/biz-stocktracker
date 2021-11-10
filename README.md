@@ -8,11 +8,13 @@ Right now, the program just is easier to set up if you use python 3.8 (I run it 
 **BASIC DOWNLOAD INSTRUCTIONS**
 
 download python 3.8.6 from python.org as an altinstall if you are using linux so it doesn't mess up your entire OS
+
 python3.8 -m pip install pandas BASC-py4chan
 
 git clone https://github.com/carsonbring/biz-stocktracker
 
 navigate to the folder and then run
+
 python3.8 main.py
 
 EASY AS PIE!
