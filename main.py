@@ -42,14 +42,16 @@ sortedNumberList = []
 sortedTickerList = []
 counter = 0
 previoussmg = ''
-
+alreadyread = []
+firstRun = True
 """
 This is a list of common words that happen to be capitalized but aren't usually tickers except for BABA and POWW, 
 currently those tickers cause a bug for some reason, will probably fix in future. Add and remove from this list to your
 heart's content """
 nottickers = ['YOU', 'AM', 'TA', 'A', 'IS', 'NOW', 'OUT', 'SO', 'ON', 'G', 'M', 'NYC', 'FOR', 'ALL', 'SAFE', 'MSM',
-              'TECH', 'BE', 'SON', 'ATH', 'MA', 'DIS', 'WIT', 'BABA', 'POWW', 'TQQQ']
-FirstRun = False
+              'TECH', 'BE', 'SON', 'ATH', 'MA', 'DIS', 'WIT', 'BABA', 'POWW', 'TQQQ',
+              'LOVE', 'IT', 'IQ', 'ARE', 'GO', 'ID', 'LMAO', 'USA', 'INS', 'U', 'REAL']
+
 
 
 # This function does all of the heavy lifting when it comes to finding the tickers from the thread
@@ -68,24 +70,37 @@ def find_tickers():
     smgposts = smgthread.all_posts
 
     # deciding on each call whether the program should grab new tickers from the messages or not
-    if smgthread.bumplimit == True and smgthread != previoussmg or smgthread.bumplimit == True and FirstRun == True or counter == 0:
+    
 
-        """since the program runs the first time even if the thread is not at post limit, the program needs to make sure
+    """since the program runs the first time even if the thread is not at post limit, the program needs to make sure
         to clear out the existing values in the lists to make room for the accurate ones. After the first run this
         is fine though because the program will only grab new tickers and enter this part of the code when the thread
         is at post limit."""
-        if FirstRun:
-            FullTickerList = []
-            FullNumberList = []
-            sortedFullNumberList = []
-            sortedFullTickerList = []
+        
+    FirstRun = False
+    if counter == 0:
+        FirstRun = True
+    
+    
+    # this  for loop gets the strings from each message and finds out if there is a ticker in each one.
+    for post in smgposts:
+        
+        existingPost = False
+        if FirstRun == False:
+            for oldpostid in alreadyread:
+                
+                if int(post.post_number) == oldpostid:
+                    
+                    existingPost = True
 
-        # sets the a variable to true so that on next run it will activate the last block of code
-        if counter == 0:
-            FirstRun = True
 
-        # this for loop gets the strings from each message and finds out if there is a ticker in each one.
-        for post in smgposts:
+
+        if existingPost and FirstRun == False:
+            existingPost = False
+            continue
+        else:
+            FirstRun = False
+            alreadyread.append(int(post.post_number))
             message = post.text_comment
             message = str(message)
             message = reformatMessage(message)
@@ -111,26 +126,26 @@ def find_tickers():
                             threadtickers.append(symbol)
                             numOfTimesMentioned.append(1)
 
-        # sorting the tickers in the temporary list (not the full one)
+    # sorting the tickers in the temporary list (not the full one)
+    largest = 0
+    indexoflargest = 0
+    tickeroflargest = ''
+
+    for j in range(len(numOfTimesMentioned)):
         largest = 0
-        indexoflargest = 0
-        tickeroflargest = ''
+        for i in range(len(numOfTimesMentioned)):
+            if numOfTimesMentioned[i] > largest:
+                largest = numOfTimesMentioned[i]
+                indexoflargest = i
+                tickeroflargest = threadtickers[i]
+                if i == len(numOfTimesMentioned) - 1:
+                    indexoflargest = 0
 
-        for j in range(len(numOfTimesMentioned)):
-            largest = 0
-            for i in range(len(numOfTimesMentioned)):
-                if numOfTimesMentioned[i] > largest:
-                    largest = numOfTimesMentioned[i]
-                    indexoflargest = i
-                    tickeroflargest = threadtickers[i]
-                    if i == len(numOfTimesMentioned) - 1:
-                        indexoflargest = 0
-
-            numOfTimesMentioned.pop(indexoflargest)
-            threadtickers.pop(indexoflargest)
-            sortedNumberList.append(largest)
-            sortedTickerList.append(tickeroflargest)
-        previoussmg = smgthread
+        numOfTimesMentioned.pop(indexoflargest)
+        threadtickers.pop(indexoflargest)
+        sortedNumberList.append(largest)
+        sortedTickerList.append(tickeroflargest)
+    
 
     print('-----------------------------------< /smg/ ticker mentions >------------------------------------------')
 
@@ -138,6 +153,7 @@ def find_tickers():
 inList = False
 indexoffullticker = ''
 if __name__ == '__main__':
+
     while True:
 
         find_tickers()
@@ -161,11 +177,11 @@ if __name__ == '__main__':
                 else:
                     FullTickerList.append(ticker)
                     FullNumberList.append(sortedNumberList[indx])
-
+        
 
 
         else:
-
+            
             FullTickerList = sortedTickerList
             FullNumberList = sortedNumberList
             sortedTickerList = []
