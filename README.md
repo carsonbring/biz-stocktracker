@@ -5,11 +5,17 @@ Right now, the program just is easier to set up if you use python 3.8 (I run it 
 - Patched an issue where the stock numbers were only updating whenever the last thread would hit post limit and when the successor thread would hit post limit as well.
 - There is an issue with the sorting algorithm that I am using, so after the first couple runs the most talked about stock tickers might not be at the top of the list, but the correct number of times mentioned is still printed despite the ordering in the output table. (will be addressed soon)
 
-**Basic download instructions - for noobs **
+**BASIC DOWNLOAD INSTRUCTIONS**
 
-(to be added soon)
+download python 3.8.6 from python.org as an altinstall if you are using linux so it doesn't mess up your entire OS
+python3.8 -m pip install pandas BASC-py4chan
 
+git clone https://github.com/carsonbring/biz-stocktracker
 
+navigate to the folder and then run
+python3.8 main.py
+
+EASY AS PIE!
 
 **INFORMATION ABOUT THE PROGRAM**
 
